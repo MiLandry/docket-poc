@@ -6,6 +6,28 @@ module.exports = {
     foo: 'bar',
   },
   plugins: [
+    {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        // This type will contain remote schema Query type
+        typeName: 'COURTCASEGQL',
+        // This is field under which it's accessible
+        fieldName: 'courtCaseGQL',
+        // Url to query from
+        url: 'http://localhost:4000/graphql',
+      },
+    },
+    {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        // This type will contain remote schema Query type
+        typeName: 'SWAPI',
+        // This is field under which it's accessible
+        fieldName: 'swapi',
+        // Url to query from
+        url: 'https://api.graphcms.com/simple/v1/swapi',
+      },
+    },
     `gatsby-transformer-json`,
     {
       resolve: `gatsby-source-filesystem`,

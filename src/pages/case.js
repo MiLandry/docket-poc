@@ -4,7 +4,7 @@ import { StaticQuery, graphql } from 'gatsby'
 
 import Header from '../components/header'
 // import './layout.css'
-
+// THIS IS WRONG
 function Case(props) {
   return (
     <StaticQuery

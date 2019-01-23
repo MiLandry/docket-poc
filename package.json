@@ -17,6 +17,7 @@
     "gatsby-source-apiserver": "^2.0.0",
     "gatsby-source-contentful": "^2.0.26",
     "gatsby-source-filesystem": "^2.0.16",
+    "gatsby-source-graphql": "^2.0.8",
     "gatsby-transformer-json": "^2.1.7",
     "gatsby-transformer-sharp": "^2.1.8",
     "prop-types": "^15.6.2",
