@@ -3,8 +3,27 @@ module.exports = {
     title: `Docker POC`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
+    foo: 'bar',
   },
   plugins: [
+    {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        // This type will contain remote schema Query type
+        typeName: 'PRISMA',
+        // This is field under which it's accessible
+        fieldName: 'prismaGQL',
+        // Url to query from
+        url: 'http://localhost:4000/',
+      },
+    },
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data`,
+      },
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
