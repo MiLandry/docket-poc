@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@emotion/core": "^10.0.6",
+    "apollo-boost": "^0.1.27",
     "formik": "^1.4.2",
     "gatsby": "^2.0.76",
     "gatsby-image": "^2.0.20",
@@ -22,6 +23,7 @@
     "gatsby-transformer-sharp": "^2.1.8",
     "prop-types": "^15.6.2",
     "react": "16.7.0-alpha.2",
+    "react-apollo": "^2.4.0",
     "react-dom": "16.7.0-alpha.2",
     "react-helmet": "^5.2.0",
     "react-typography": "^0.16.18",
