@@ -1,37 +1,30 @@
+let activeEnv = process.env.ACTIVE_ENV || process.env.NODE_ENV || 'development'
+
+console.log(`Using environment config: '${activeEnv}'`)
+
+require('dotenv').config({
+  path: `.env.${activeEnv}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Docker POC`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    foo: 'bar',
+    author: `@MichaelLandry`,
   },
   plugins: [
     {
       resolve: 'gatsby-source-graphql',
       options: {
         // This type will contain remote schema Query type
-        typeName: 'PRISMA',
+        typeName: 'PRISMAAPI',
         // This is field under which it's accessible
-        fieldName: 'prismaGQL',
+        fieldName: 'prismaGqlApi',
         // Url to query from
         url: 'http://localhost:4000/',
       },
     },
-    `gatsby-transformer-json`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `./src/data`,
-      },
-    },
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {

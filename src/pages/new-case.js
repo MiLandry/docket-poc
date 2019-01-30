@@ -1,91 +1,116 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
-import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-// import registerServiceWorker from './registerServiceWorker'
-import { ApolloProvider } from 'react-apollo'
-import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import React, { useState } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import PersonForm from '../components/PersonForm';
+import Layout from '../components/layout';
 
 const POST_MUTATION = gql`
-  mutation createPersonMutation($firstName: String!, $lastName: String!) {
-    createPerson(firstName: $firstName, lastName: $lastName) {
+  mutation createCourtCaseMutation(
+    $plaintiffFirstName: String!
+    $plaintiffLastName: String!
+    $defendantFirstName: String!
+    $defendantLastName: String!
+    $lawyerFirstName: String!
+    $lawyerLastName: String!
+  ) {
+    createCourtCase(
+      plaintiffFirstName: $plaintiffFirstName
+      plaintiffLastName: $plaintiffLastName
+      defendantFirstName: $defendantFirstName
+      defendantLastName: $defendantLastName
+      lawyerFirstName: $lawyerFirstName
+      lawyerLastName: $lawyerLastName
+    ) {
       id
-      firstName
-      lastName
+      plaintiff {
+        firstName
+        id
+      }
+      defendant {
+        firstName
+        id
+      }
+      lawyer {
+        firstName
+        id
+      }
     }
   }
-`
-// mutation PostMutation($description: String!, $url: String!) {
-//   post(description: $description, url: $url) {
-//     id
-//     createdAt
-//     url
-//     description
-//   }
-// }
+`;
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000',
-})
+  uri: process.env.GATSBY_PRISMA_URI,
+});
 
 const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
-})
+});
 
 const NewCaseForm = () => {
-  const [firstName, setFirstName] = useState()
-  const [lastName, setLastName] = useState()
-  // const [count, setCount] = useState(0);
+  const [plaintiffFirstName, setPlaintiffFirstName] = useState();
+  const [plaintiffLastName, setPlaintiffLastName] = useState();
+  const [defendantFirstName, setDefendantFirstName] = useState();
+  const [defendantLastName, setDefendantLastName] = useState();
+  const [lawyerFirstName, setLawyerFirstName] = useState();
+  const [lawyerLastName, setLawyerLastName] = useState();
   return (
     <ApolloProvider client={client}>
-      <div>
-        <input
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
-          type="text"
-          placeholder="First name"
-        />
-        <input
-          value={lastName}
-          onChange={e => setLastName(e.target.value)}
-          type="text"
-          placeholder="Last name"
-        />
-        {/* <Mutation mutation={POST_MUTATION} variables={{ description, url }}>
-          {() => (
-            <button onClick={`... you'll implement this 🔜`}>Submit</button>
-          )}
-        </Mutation> */}
-        <Mutation mutation={POST_MUTATION} variables={{ firstName, lastName }}>
-          {postMutation => <button onClick={postMutation}>Submit</button>}
-        </Mutation>
-      </div>
-      )
+      <Layout>
+        <h1>Start a new case</h1>
+        <form>
+          <PersonForm
+            personType="Plaintiff"
+            firstName={plaintiffFirstName}
+            lastName={plaintiffLastName}
+            setFirstName={setPlaintiffFirstName}
+            setLastName={setPlaintiffLastName}
+          />
+          <PersonForm
+            personType="Defendant"
+            firstName={defendantFirstName}
+            lastName={defendantLastName}
+            setFirstName={setDefendantFirstName}
+            setLastName={setDefendantLastName}
+          />
+          <PersonForm
+            personType="Lawyer"
+            firstName={lawyerFirstName}
+            lastName={lawyerLastName}
+            setFirstName={setLawyerFirstName}
+            setLastName={setLawyerLastName}
+          />
+
+          <Mutation
+            mutation={POST_MUTATION}
+            variables={{
+              plaintiffFirstName,
+              plaintiffLastName,
+              defendantFirstName,
+              defendantLastName,
+              lawyerFirstName,
+              lawyerLastName,
+            }}
+            onCompleted={() => {
+              window.location = '/';
+            }}
+          >
+            {postMutation => {
+              const handleFormSubmit = e => {
+                e.preventDefault();
+                postMutation();
+              };
+              return <button onClick={handleFormSubmit}>Submit</button>;
+            }}
+          </Mutation>
+        </form>
+      </Layout>
     </ApolloProvider>
-  )
-}
+  );
+};
 
-export default NewCaseForm
-// registerServiceWorker()
-
-// import React from 'react'
-// import { Link } from 'gatsby'
-
-// import Layout from '../components/layout'
-// import SEO from '../components/seo'
-// import NewCaseForm from '../components/forms/NewCaseForm'
-
-// const SecondPage = () => (
-//   <Layout>
-//     <SEO title="Page two" />
-//     <h1>New case</h1>
-//     <NewCaseForm />
-
-//     <Link to="/">Go back to the homepage</Link>
-//   </Layout>
-// )
-
-// export default SecondPage
+export default NewCaseForm;
