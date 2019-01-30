@@ -1,10 +1,10 @@
-let activeEnv = process.env.ACTIVE_ENV || process.env.NODE_ENV || 'development'
+let activeEnv = process.env.ACTIVE_ENV || process.env.NODE_ENV || 'development';
 
-console.log(`Using environment config: '${activeEnv}'`)
+console.log(`Using environment config: '${activeEnv}'`);
 
 require('dotenv').config({
   path: `.env.${activeEnv}`,
-})
+});
 
 module.exports = {
   siteMetadata: {
@@ -13,17 +13,6 @@ module.exports = {
     author: `@MichaelLandry`,
   },
   plugins: [
-    {
-      resolve: 'gatsby-source-graphql',
-      options: {
-        // This type will contain remote schema Query type
-        typeName: 'PRISMAAPI',
-        // This is field under which it's accessible
-        fieldName: 'prismaGqlApi',
-        // Url to query from
-        url: 'http://localhost:4000/',
-      },
-    },
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -43,4 +32,4 @@ module.exports = {
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
   ],
-}
+};
