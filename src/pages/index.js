@@ -4,12 +4,14 @@ import DocketTable from '../components/DocketTable';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import fetch from 'node-fetch';
 
 import Layout from '../components/layout';
 import { createHttpLink } from 'apollo-link-http';
 
 const httpLink = createHttpLink({
   uri: process.env.GATSBY_PRISMA_URI,
+  fetch,
 });
 
 const client = new ApolloClient({

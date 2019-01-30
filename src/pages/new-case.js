@@ -7,6 +7,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import PersonForm from '../components/PersonForm';
 import Layout from '../components/layout';
+import fetch from 'node-fetch';
 
 const POST_MUTATION = gql`
   mutation createCourtCaseMutation(
@@ -44,6 +45,7 @@ const POST_MUTATION = gql`
 
 const httpLink = createHttpLink({
   uri: process.env.GATSBY_PRISMA_URI,
+  fetch,
 });
 
 const client = new ApolloClient({
